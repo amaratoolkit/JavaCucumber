@@ -1,26 +1,27 @@
 package runner;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
+
 import org.openqa.selenium.WebDriver;
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
 
-@RunWith(Cucumber.class)
+//@RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        tags = {"@web"},
-        glue={"steps"},
-        format = {"pretty", "html:target/cucumber"})
+        glue={"steps"})
 
-public class ChromeTestRunner {
+// format = {"pretty", "html:target/cucumber"}
+//         tags = {"@web"},
+public class ChromeTestRunner extends AbstractTestNGCucumberTests {
     public static WebDriver driver;
 
-    @BeforeClass
+    @BeforeSuite
     public static void launchBrowser() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -29,7 +30,7 @@ public class ChromeTestRunner {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
 
-    @AfterClass
+    @AfterSuite
     public static void killSession(){
         driver.quit();
     }

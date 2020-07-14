@@ -3,7 +3,10 @@ package Pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,11 +49,8 @@ public class HomePage {
     private WebElement lowestFareTicketAfterSelected;
 
     public void searchFightTickets(String source, String destination) {
-        try {
-            Thread.sleep(40000);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//*[@value=1 and @type='radio' and @name='bookingType']"),1));
 
         try {
             JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -65,12 +65,7 @@ public class HomePage {
         destinationInput.sendKeys(destination);
         destinationInput.sendKeys(Keys.TAB);
         destinationInput.sendKeys(Keys.ENTER);
-       // searchButton.click();
-        try {
-            Thread.sleep(3000);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".time-total")));
     }
 
     public String getTitleOfThePage(){

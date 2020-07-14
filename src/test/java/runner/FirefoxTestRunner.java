@@ -1,28 +1,28 @@
 package runner;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
 
-@RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        tags = {"@web"},
-        glue={"steps"},
-        format = {"pretty", "html:target/cucumber"})
 
-public class FirefoxTestRunner {
+        glue={"steps"})
+
+public class FirefoxTestRunner extends AbstractTestNGCucumberTests {
     public static WebDriver driver;
 
-    @BeforeClass
+    @BeforeSuite
     public static void launchBrowser() {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
@@ -31,7 +31,7 @@ public class FirefoxTestRunner {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
 
-    @AfterClass
+    @AfterSuite
     public static void killSession(){
         driver.quit();
     }

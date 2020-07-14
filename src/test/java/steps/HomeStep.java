@@ -1,11 +1,14 @@
 package steps;
 
 import Pages.HomePage;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
+//import io.cucumber.java.en.*;
+
+import org.testng.Assert;
 import runner.ChromeTestRunner;
 
 public class HomeStep extends ChromeTestRunner {
@@ -37,9 +40,8 @@ public class HomeStep extends ChromeTestRunner {
         homePage.selectFasterDestinationAndLowestPrice(homePage.getSmallest(homePage.getDurationOfTravel()),
                 homePage.getSmallest(homePage.getPriceOfAllTickets()));
         System.out.println(homePage.getlowestFarePrice().trim());
-
-        Assert.assertTrue(homePage.getlowestFarePrice().trim()
-                .equals(homePage.getSmallest(homePage.getPriceOfAllTickets())));
+        Integer lowestPrice = Integer.parseInt(homePage.getlowestFarePrice().trim());
+        Assert.assertTrue(lowestPrice.equals(homePage.getSmallest(homePage.getPriceOfAllTickets())));
         System.out.println("Success");
     }
 }

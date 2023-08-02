@@ -49,7 +49,7 @@ public class HomePage {
     private WebElement lowestFareTicketAfterSelected;
 
     public void searchFightTickets(String source, String destination) {
-        WebDriverWait wait = new WebDriverWait(driver, 60);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//*[@value=1 and @type='radio' and @name='bookingType']"),1));
 
         try {

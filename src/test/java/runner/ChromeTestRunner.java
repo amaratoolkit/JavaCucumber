@@ -6,9 +6,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 //@RunWith(Cucumber.class)
@@ -23,11 +25,15 @@ public class ChromeTestRunner extends AbstractTestNGCucumberTests {
 
     @BeforeSuite
     public static void launchBrowser() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "/Users/shiva/Downloads/chrome-mac-x64/chromedriver");
+        ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--remote-allow-origins=*");
+        options.setBinary("/Users/shiva/Downloads/chrome-mac-x64/ChromeTest");
+       // WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver(options);
         driver.get("https://www.qatarairways.com/en-us/homepage.html");
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @AfterSuite
